@@ -61,9 +61,13 @@ public:
 
     Matrix<T> operator+(const Matrix<T> &);//Matrix Addition
 
+    
+
     Matrix<T> operator-(const Matrix<T> &);//Matrix Subtraction
 
+
     Matrix<T> operator*(const Matrix<T> &);//Matrix Multiplication
+
 
     Matrix<T> operator*(const T &);//Matrix Multiplication with a Scalar
 
