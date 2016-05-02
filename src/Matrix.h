@@ -53,25 +53,100 @@ public:
         os << endl;
         os << endl;
     }
-     */
+    */
 
     void printMatrix();
 
     //TODO Implement the functions below
 
-    Matrix<T> operator+(const Matrix<T> &);//Matrix Addition
+    //  answer = obj1.operator+(obj2) ->     object1 function {   oprator+(obj2) }
+    //  obj1.expand()
+    //  obj1.+(obj2)
+    // obj1.operator+(obj2)
 
-    
+    Matrix<T> operator+(const Matrix<T> &other)   //;//Matrix Addition
+    {
+        if( (rows != other.rows) || (cols != other.cols))
+        {
+            throw exception();
+        }
 
-    Matrix<T> operator-(const Matrix<T> &);//Matrix Subtraction
+        Matrix *obj = new Matrix(rows, cols);
+        for(int i=0;i<rows;i++)
+        {
+            for(int j=0;j<cols;j++)
+            {
+                obj->matrix[i][j] = matrix[i][j] + other.matrix[i][j];
+            }
+        }
+
+        return *obj;
+    }
+
+    Matrix<T> operator-(const Matrix<T> &other) //;//Matrix Subtraction
+    {
+        if( (rows != other.rows) || (cols != other.cols))
+        {
+            throw exception();
+        }
 
 
-    Matrix<T> operator*(const Matrix<T> &);//Matrix Multiplication
+        Matrix *obj = new Matrix(rows, cols);
+        for(int i=0;i<rows;i++)
+        {
+            for(int j=0;j<cols;j++)
+            {
+                obj->matrix[i][j] = matrix[i][j] - other.matrix[i][j];
+            }
+        }
+
+        return *obj;
+    }
 
 
-    Matrix<T> operator*(const T &);//Matrix Multiplication with a Scalar
+    Matrix<T> operator*(const Matrix<T> &other) //;//Matrix Multiplication
+    {
+        if( (rows != other.cols) || (cols != other.rows))
+        {
+            throw exception();
+        }
+
+
+        Matrix *obj = new Matrix(rows, other.cols);
+        for(int i=0;i<rows;i++)
+        {
+            for(int j=0;j<other.cols;j++)
+            {
+                int sum = 0;
+                for(int k=0;k<cols;k++)
+                {
+                    sum = sum + matrix[i][k]*other.matrix[k][j];
+                }
+                obj->matrix[i][j] = sum;
+            }
+        }
+
+        return *obj;
+    }
+
+    Matrix<T> operator*(const T &scalar) //;//Matrix Multiplication with a Scalar
+    {
+        Matrix *obj = new Matrix(rows, cols);
+        for(int i=0;i<rows;i++)
+        {
+            for(int j=0;j<cols;j++)
+            {
+                obj->matrix[i][j] = matrix[i][j] * scalar;
+            }
+        }
+
+        return *obj;
+    }
+
 
 };
+
+
 
 template<class T>
 void Matrix<T>::validSizeCheck(int rows, int cols) {
